@@ -67,6 +67,42 @@ def get_followers():
 
     search_profile(usernames_list)
 
+# capture the following's usernames
+def get_following():
+    print("Accessing following's list...")
+
+    driver.find_element_by_xpath('//*[@id="react-root"]/section/nav/div[2]/div/div/div[3]/div/div[5]/a').click()
+    sleep(3)
+    driver.find_element_by_xpath('//*[@id="react-root"]/section/main/div/header/section/ul/li[3]/a').click()
+    sleep(3)
+
+    # get number of following
+    following_number = driver.find_element_by_xpath('//*[@id="react-root"]/section/main/div/header/section/ul/li[3]/a/span').get_attribute('textContent')
+
+    if '.' in following_number:
+        following_number = following_number.replace('.', '')
+
+    list_to_scroll = driver.find_element_by_xpath('/html/body/div[4]/div/div[2]/ul/div')
+    sleep(2)
+
+    # scroll the following's list to the end
+    print("Getting following's names...")
+    scroll_times = int(math.ceil(int(following_number) / 8))
+    for i in range(scroll_times):
+        driver.execute_script('document.querySelector(".PZuss").scrollIntoView(false)')
+        sleep(2)
+
+    # get each username in the following's list
+    print("Putting names in a list...")
+    usernames_elements = list_to_scroll.find_elements_by_tag_name('a')
+    usernames_list = [user.text for user in usernames_elements if len(user.text) > 0]
+    sleep(2)
+
+    driver.refresh()
+    sleep(2)
+
+    print("Num: {}, List: {}".format(following_number, usernames_list))
+
 # search the draw's profile and publication
 def search_profile(usernames):
     driver.get(post_link)
