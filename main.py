@@ -30,7 +30,7 @@ def main(args):
 
     access_account(driver, username, password)
     usernames_list = get_followers(driver)
-    # search_profile(driver, usernames_list, post_link)
+    # search_profile(driver, usernames_list, post_link. args.num, args.comment)
 
 
 # login on instagram
@@ -134,11 +134,11 @@ def get_following(driver):
 
 
 # search the draw's profile and publication
-def search_profile(driver, usernames, post_link):
+def search_profile(driver, usernames, post_link, n, comment):
     driver.get(post_link)
 
     print("Commenting on post...")
-    for i in range(0, len(usernames), 3):
+    for i in range(0, len(usernames), n):
         can_press = True
 
         while can_press:
@@ -153,7 +153,10 @@ def search_profile(driver, usernames, post_link):
                 sleep(4)
 
         # write follower's username
-        message = '@' + usernames[i] + ' @' + usernames[i + 1] + ' @' + usernames[i + 2]
+        message = ''
+        for j in range(0, n):
+            message += '@' + usernames[i+j] + ' '
+        message += comment
         driver.find_element_by_xpath('/html/body/div[1]/section/main/div/div[1]/article/div[2]/section[3]/div/form/textarea').send_keys(message)
         sleep(2)
 
@@ -164,6 +167,8 @@ def search_profile(driver, usernames, post_link):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="A Tool to automatically tag people and post on Instagram to join in a draw!\nIn default, it reads `config.json` to get configuration.\n",formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument("--num", type=int, required=True, help="number of people being tagged")
+    parser.add_argument("--comment", type=str, required=True, help="comment after tagging people")
     parser.add_argument("--config", type=str, help="path of configuration file, default: './config.json'")
     parser.add_argument("--whitelist", action="store_true", help="if you want to use the `usernames_list` in config, turn on this option")
     args = parser.parse_args()
