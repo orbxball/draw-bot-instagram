@@ -44,6 +44,17 @@ def access_account(driver, username, password):
     driver.find_element_by_xpath('//button[@type="submit"]').click()
     sleep(4)
 
+    # Sometimes Instagram will ask you if you want to save the login info
+    # Thus, we need to check if you enter into that page
+    # Need to skip that page with "Not Now" and keep going
+    try:
+        driver.find_element_by_xpath('/html/body/div[4]/div/div/div[3]/button[2]').click()
+    except:
+        # Click on "Not Now"
+        driver.find_element_by_xpath('//*[@id="react-root"]/section/main/div/div/div/div/button').click()
+        sleep(2)
+
+    # Go to account page
     driver.find_element_by_xpath('/html/body/div[4]/div/div/div[3]/button[2]').click()
     sleep(2)
 
