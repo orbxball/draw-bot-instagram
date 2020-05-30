@@ -1,19 +1,34 @@
+import argparse
+import math
+import json
 from selenium import webdriver
 from time import sleep
-import math
 # Find the correct version of chromedriver automatically
 # https://stackoverflow.com/questions/60296873/sessionnotcreatedexception-message-session-not-created-this-version-of-chrome
 from webdriver_manager.chrome import ChromeDriverManager
 
-# path for the chromedriver
-oper_sys = 'YOUR-OS-HERE'
-driver_path = oper_sys.lower() + '/chromedriver.exe'
-driver = webdriver.Chrome(ChromeDriverManager().install())
 
-# user data and draw's profile
-username = "YOUR-USERNAME-HERE"
-password = "YOUR-PASSWORD-HERE"
-post_link = "POST-LINK-HERE"
+def main(args):
+    config_path = './config.json' if not args.config else args.config
+    with open(config_path, 'r+') as f:
+        config = json.load(f)
+
+    # path for the chromedriver
+    oper_sys = config['oper_sys']
+    driver_name = '/chromedriver.exe' if oper_sys == 'windows' else '/chromedriver'
+    driver_path = oper_sys.lower() + driver_name
+    driver = webdriver.Chrome(ChromeDriverManager().install())
+
+    # user data and draw's profile
+    username = config['username']
+    password = config['password']
+    post_link = config['post_link']
+
+    # if whitelist is on, use this
+    if args.whitelist:
+        usernames_list = config['usernames_list']
+
+    # access_account()
 
 # login on instagram
 def access_account():
@@ -132,5 +147,10 @@ def search_profile(usernames):
         sleep(2)
 
 
-access_account()
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="A Tool to automatically tag people and post on Instagram to join in a draw!\nIn default, it reads `config.json` to get configuration.\n",formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument("--config", type=str, help="path of configuration file, default: './config.json'")
+    parser.add_argument("--whitelist", action="store_true", help="if you want to use the `usernames_list` in config, turn on this option")
+    args = parser.parse_args()
 
+    main(args)
