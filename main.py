@@ -24,12 +24,16 @@ def main(args):
     password = config['password']
     post_link = config['post_link']
 
+    access_account(driver, username, password)
+    usernames_list = []
     # if whitelist is on, use this
     if args.whitelist:
-        usernames_list = config['usernames_list']
-
-    access_account(driver, username, password)
-    usernames_list = get_followers(driver)
+        usernames_list += config['usernames_list']
+    else:
+        if args.followers:
+            usernames_list += get_followers(driver)
+        if args.following:
+            usernames_list += get_following(driver)
     # search_profile(driver, usernames_list, post_link. args.num, args.comment)
 
 
@@ -171,6 +175,8 @@ if __name__ == '__main__':
     parser.add_argument("--comment", type=str, required=True, help="comment after tagging people")
     parser.add_argument("--config", type=str, help="path of configuration file, default: './config.json'")
     parser.add_argument("--whitelist", action="store_true", help="if you want to use the `usernames_list` in config, turn on this option")
+    parser.add_argument("--followers", action="store_true", help="if you want to tag all followers, turn on this option")
+    parser.add_argument("--following", action="store_true", help="if you want to tag all followings, turn on this option")
     args = parser.parse_args()
 
     main(args)
