@@ -28,10 +28,13 @@ def main(args):
     if args.whitelist:
         usernames_list = config['usernames_list']
 
-    # access_account()
+    access_account(driver, username, password)
+    usernames_list = get_followers(driver)
+    # search_profile(driver, usernames_list, post_link)
+
 
 # login on instagram
-def access_account():
+def access_account(driver, username, password):
     driver.get("https://www.instagram.com")
     sleep(3)
 
@@ -44,10 +47,9 @@ def access_account():
     driver.find_element_by_xpath('/html/body/div[4]/div/div/div[3]/button[2]').click()
     sleep(2)
 
-    get_followers()
 
 # capture the followers's usernames
-def get_followers():
+def get_followers(driver):
     print("Accessing follower's list...")
 
     driver.find_element_by_xpath('//*[@id="react-root"]/section/nav/div[2]/div/div/div[3]/div/div[5]/a').click()
@@ -80,10 +82,11 @@ def get_followers():
     driver.refresh()
     sleep(2)
 
-    search_profile(usernames_list)
+    return usernames_list
+
 
 # capture the following's usernames
-def get_following():
+def get_following(driver):
     print("Accessing following's list...")
 
     driver.find_element_by_xpath('//*[@id="react-root"]/section/nav/div[2]/div/div/div[3]/div/div[5]/a').click()
@@ -116,10 +119,11 @@ def get_following():
     driver.refresh()
     sleep(2)
 
-    print("Num: {}, List: {}".format(following_number, usernames_list))
+    return usernames_list
+
 
 # search the draw's profile and publication
-def search_profile(usernames):
+def search_profile(driver, usernames, post_link):
     driver.get(post_link)
 
     print("Commenting on post...")
