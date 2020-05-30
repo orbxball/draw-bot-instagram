@@ -52,15 +52,17 @@ def access_account(driver, username, password):
     # Thus, we need to check if you enter into that page
     # Need to skip that page with "Not Now" and keep going
     try:
+        # Go to account page
         driver.find_element_by_xpath('/html/body/div[4]/div/div/div[3]/button[2]').click()
+        sleep(2)
     except:
         # Click on "Not Now"
         driver.find_element_by_xpath('//*[@id="react-root"]/section/main/div/div/div/div/button').click()
         sleep(2)
 
-    # Go to account page
-    driver.find_element_by_xpath('/html/body/div[4]/div/div/div[3]/button[2]').click()
-    sleep(2)
+        # Go to account page
+        driver.find_element_by_xpath('/html/body/div[4]/div/div/div[3]/button[2]').click()
+        sleep(2)
 
 
 # capture the followers's usernames
