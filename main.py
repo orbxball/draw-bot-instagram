@@ -34,6 +34,12 @@ def main(args):
             usernames_list += get_followers(driver)
         if args.following:
             usernames_list += get_following(driver)
+
+    # remove blacklist
+    blacklist = config['blacklist']
+    for handle in blacklist:
+        if handle in usernames_list:
+            usernames_list.remove(handle)
     # search_profile(driver, usernames_list, post_link. args.num, args.comment)
 
 
