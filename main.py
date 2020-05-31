@@ -38,12 +38,23 @@ def main(args):
         if args.following:
             usernames_set.update(get_following(driver))
         usernames_list = list(usernames_set)
+        usernames_list.sort() # guaranteed the order
 
     # remove blacklist
     blacklist = config['blacklist']
     for handle in blacklist:
         if handle in usernames_list:
             usernames_list.remove(handle)
+
+    # see if we need to continue from last time breakpoint IG handle
+    if args.breakpoint:
+        try:
+            idx = usernames_list.index(args.breakpoint)
+        except ValueError:
+            print("Instagram name @{} does not exist! Please check it again!!!".format(args.breakpoint))
+            return
+        usernames_list = usernames_list[idx+1:]
+
     print("Number of tagged: {}".format(len(usernames_list)))
     search_profile(driver, usernames_list, post_link, args.num, args.comment)
 
@@ -190,6 +201,7 @@ if __name__ == '__main__':
     parser.add_argument("--whitelist", action="store_true", help="if you want to use the `usernames_list` in config, turn on this option")
     parser.add_argument("--followers", action="store_true", help="if you want to tag all followers, turn on this option")
     parser.add_argument("--following", action="store_true", help="if you want to tag all followings, turn on this option")
+    parser.add_argument("--breakpoint", type=str, help="put the last successful ig id here to keep continuing", metavar="IG_NAME")
     args = parser.parse_args()
 
     main(args)
