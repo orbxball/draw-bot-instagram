@@ -25,15 +25,19 @@ def main(args):
     post_link = config['post_link']
 
     access_account(driver, username, password)
+
     usernames_list = []
     # if whitelist is on, use this
     if args.whitelist:
-        usernames_list += config['usernames_list']
+        print("Using whitelist...")
+        usernames_list = config['usernames_list']
     else:
+        usernames_set = set()
         if args.followers:
-            usernames_list += get_followers(driver)
+            usernames_set.update(get_followers(driver))
         if args.following:
-            usernames_list += get_following(driver)
+            usernames_set.update(get_following(driver))
+        usernames_list = list(usernames_set)
 
     # remove blacklist
     blacklist = config['blacklist']
