@@ -40,7 +40,8 @@ def main(args):
     for handle in blacklist:
         if handle in usernames_list:
             usernames_list.remove(handle)
-    # search_profile(driver, usernames_list, post_link. args.num, args.comment)
+    print("Number of tagged: {}".format(len(usernames_list)))
+    search_profile(driver, usernames_list, post_link, args.num, args.comment)
 
 
 # login on instagram
