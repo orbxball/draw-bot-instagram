@@ -26,25 +26,19 @@ def main(args):
 
     access_account(driver, username, password)
 
-    usernames_list = []
-    # if whitelist is on, use this
-    if args.whitelist:
-        print("Using whitelist...")
-        usernames_list = config['usernames_list']
+    # load from last time `usernames_list` directly
+    if args.load:
+        with open('usernames_list.json', 'r+') as f:
+            data = json.load(f)
+            print("loaded 'usernames_list.json'...")
+            usernames_list = data['usernames_list']
+    # login instagram account page to get `usernames_list`
     else:
-        usernames_set = set()
-        if args.followers:
-            usernames_set.update(get_followers(driver))
-        if args.following:
-            usernames_set.update(get_following(driver))
-        usernames_list = list(usernames_set)
-        usernames_list.sort() # guaranteed the order
-
-    # remove blacklist
-    blacklist = config['blacklist']
-    for handle in blacklist:
-        if handle in usernames_list:
-            usernames_list.remove(handle)
+        usernames_list = get_usernames_list(args, config, driver)
+        data = {"usernames_list": usernames_list}
+        with open('usernames_list.json', 'w+') as f:
+            json.dump(data, f)
+            print("saved 'usernames_list.json'...")
 
     # see if we need to continue from last time breakpoint IG handle
     if args.breakpoint:
@@ -85,6 +79,31 @@ def access_account(driver, username, password):
         # Go to account page
         driver.find_element_by_xpath('/html/body/div[4]/div/div/div[3]/button[2]').click()
         sleep(2)
+
+
+# get `usernames_list` from whitelist or account page
+def get_usernames_list(args, config, driver):
+    usernames_list = []
+    # if whitelist is on, use this
+    if args.whitelist:
+        print("Using whitelist...")
+        usernames_list = config['usernames_list']
+    else:
+        usernames_set = set()
+        if args.followers:
+            usernames_set.update(get_followers(driver))
+        if args.following:
+            usernames_set.update(get_following(driver))
+        usernames_list = list(usernames_set)
+        usernames_list.sort() # guaranteed the order
+
+    # remove blacklist
+    blacklist = config['blacklist']
+    for handle in blacklist:
+        if handle in usernames_list:
+            usernames_list.remove(handle)
+
+    return usernames_list
 
 
 # capture the followers's usernames
@@ -202,6 +221,7 @@ if __name__ == '__main__':
     parser.add_argument("--followers", action="store_true", help="if you want to tag all followers, turn on this option")
     parser.add_argument("--following", action="store_true", help="if you want to tag all followings, turn on this option")
     parser.add_argument("--breakpoint", type=str, help="put the last successful ig id here to keep continuing", metavar="IG_NAME")
+    parser.add_argument("--load", action="store_true", help="if you want to load 'usernames_list' saved from last time, turn on this option")
     args = parser.parse_args()
 
     main(args)
