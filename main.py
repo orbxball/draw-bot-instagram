@@ -199,6 +199,8 @@ def search_profile(driver, usernames, post_link, n, comment):
                 driver.find_element_by_xpath('/html/body/div[1]/section/main/div/div[1]/article/div[2]/section[3]/div/form/button').click()
                 sleep(4)
 
+        print('the above comment Succeed!')
+
         # write follower's username
         message = ''
         for j in range(0, n):
@@ -210,6 +212,8 @@ def search_profile(driver, usernames, post_link, n, comment):
         # press post button
         driver.find_element_by_xpath('/html/body/div[1]/section/main/div/div[1]/article/div[2]/section[3]/div/form/button').click()
         sleep(2)
+
+        print(message)
 
 
 if __name__ == '__main__':
