@@ -195,9 +195,12 @@ def search_profile(driver, usernames, post_link, n, comment):
                 sleep(4)
                 can_press = False
             except:
-                # press post button if comment is blocked
-                driver.find_element_by_xpath('/html/body/div[1]/section/main/div/div[1]/article/div[2]/section[3]/div/form/button').click()
-                sleep(4)
+                try:
+                    # press post button if comment is blocked
+                    driver.find_element_by_xpath('/html/body/div[1]/section/main/div/div[1]/article/div[2]/section[3]/div/form/button').click()
+                    sleep(4)
+                except:
+                    sleep(180)
 
         print('the above comment Succeed!')
 
@@ -214,6 +217,7 @@ def search_profile(driver, usernames, post_link, n, comment):
         sleep(2)
 
         print(message)
+        sleep(60)
 
 
 if __name__ == '__main__':
