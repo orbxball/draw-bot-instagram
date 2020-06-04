@@ -91,9 +91,17 @@ def get_usernames_list(args, config, driver):
     else:
         usernames_set = set()
         if args.followers:
-            usernames_set.update(get_followers(driver))
+            followers_set = set(get_followers(driver))
+            rm_set = set()
+            if args.only:
+                rm_set.update(get_following(driver))
+            usernames_set.update(followers_set - rm_set)
         if args.following:
-            usernames_set.update(get_following(driver))
+            following_set = set(get_following(driver))
+            rm_set = set()
+            if args.only:
+                rm_set.update(get_followers(driver))
+            usernames_set.update(following_set - rm_set)
         usernames_list = list(usernames_set)
         usernames_list.sort() # guaranteed the order
 
@@ -228,6 +236,7 @@ if __name__ == '__main__':
     parser.add_argument("--whitelist", action="store_true", help="if you want to use the `usernames_list` in config, turn on this option")
     parser.add_argument("--followers", action="store_true", help="if you want to tag all followers, turn on this option")
     parser.add_argument("--following", action="store_true", help="if you want to tag all followings, turn on this option")
+    parser.add_argument("--only", action="store_true", help="if this option is turned on, the intersection of 'folllowers' and 'following' would be removed. It would be 'only followers' or 'only following'")
     parser.add_argument("--breakpoint", type=str, help="put the last successful ig id here to keep continuing", metavar="IG_NAME")
     parser.add_argument("--load", action="store_true", help="if you want to load 'usernames_list' saved from last time, turn on this option")
     args = parser.parse_args()
