@@ -118,8 +118,6 @@ def get_usernames_list(args, config, driver):
 def get_followers(driver):
     print("Accessing follower's list...")
 
-    driver.find_element_by_xpath('//*[@id="react-root"]/section/nav/div[2]/div/div/div[3]/div/div[5]/a').click()
-    sleep(3)
     driver.find_element_by_xpath('//*[@id="react-root"]/section/main/div/header/section/ul/li[2]/a').click()
     sleep(3)
 
@@ -155,8 +153,6 @@ def get_followers(driver):
 def get_following(driver):
     print("Accessing following's list...")
 
-    driver.find_element_by_xpath('//*[@id="react-root"]/section/nav/div[2]/div/div/div[3]/div/div[5]/a').click()
-    sleep(3)
     driver.find_element_by_xpath('//*[@id="react-root"]/section/main/div/header/section/ul/li[3]/a').click()
     sleep(3)
 
