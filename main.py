@@ -69,7 +69,7 @@ def access_account(driver, username, password):
     # Need to skip that page with "Not Now" and keep going
     try:
         # Go to account page
-        driver.find_element_by_xpath('/html/body/div[4]/div/div/div[3]/button[2]').click()
+        driver.get("https://www.instagram.com/" + username)
         sleep(2)
     except:
         # Click on "Not Now"
@@ -77,7 +77,7 @@ def access_account(driver, username, password):
         sleep(2)
 
         # Go to account page
-        driver.find_element_by_xpath('/html/body/div[4]/div/div/div[3]/button[2]').click()
+        driver.get("https://www.instagram.com/" + username)
         sleep(2)
 
 
