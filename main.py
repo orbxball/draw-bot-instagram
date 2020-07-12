@@ -127,7 +127,7 @@ def get_followers(driver):
     if '.' in followers_number:
         followers_number = followers_number.replace('.', '')
 
-    list_to_scroll = driver.find_element_by_xpath('/html/body/div[4]/div/div/div[2]/ul/div')
+    list_to_scroll = driver.find_element_by_xpath('/html/body/div[4]/div/div/div[2]/ul')
     sleep(2)
 
     # scroll the followers's list to the end
@@ -162,7 +162,7 @@ def get_following(driver):
     if '.' in following_number:
         following_number = following_number.replace('.', '')
 
-    list_to_scroll = driver.find_element_by_xpath('/html/body/div[4]/div/div/div[2]/ul/div')
+    list_to_scroll = driver.find_element_by_xpath('/html/body/div[4]/div/div/div[2]/ul')
     sleep(2)
 
     # scroll the following's list to the end
