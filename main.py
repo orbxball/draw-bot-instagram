@@ -169,7 +169,7 @@ def get_following(driver):
     print("Getting following's names...")
     scroll_times = int(math.ceil(int(following_number) / 8))
     for i in range(scroll_times):
-        driver.execute_script('document.querySelector(".isgrP").scrollIntoView(false)')
+        driver.execute_script('document.querySelector(".PZuss").scrollIntoView(false)')
         sleep(2)
 
     # get each username in the following's list
