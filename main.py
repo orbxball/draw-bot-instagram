@@ -195,13 +195,13 @@ def search_profile(driver, usernames, post_link, n, comment):
         while can_press:
             try:
                 # click on comment area
-                driver.find_element_by_xpath('/html/body/div[1]/section/main/div/div[1]/article/div[2]/section[3]/div/form/textarea').click()
+                driver.find_element_by_xpath(xpath['comment_area']).click()
                 sleep(4)
                 can_press = False
             except:
                 try:
                     # press post button if comment is blocked
-                    driver.find_element_by_xpath('/html/body/div[1]/section/main/div/div[1]/article/div[2]/section[3]/div/form/button').click()
+                    driver.find_element_by_xpath(xpath['post_button']).click()
                     sleep(4)
                 except:
                     sleep(180)
@@ -213,11 +213,11 @@ def search_profile(driver, usernames, post_link, n, comment):
         for j in range(0, n):
             message += '@' + usernames[i+j] + ' '
         message += comment
-        driver.find_element_by_xpath('/html/body/div[1]/section/main/div/div[1]/article/div[2]/section[3]/div/form/textarea').send_keys(message)
+        driver.find_element_by_xpath(xpath['comment_area']).send_keys(message)
         sleep(2)
 
         # press post button
-        driver.find_element_by_xpath('/html/body/div[1]/section/main/div/div[1]/article/div[2]/section[3]/div/form/button').click()
+        driver.find_element_by_xpath(xpath['post_button']).click()
         sleep(2)
 
         print(message)
@@ -236,5 +236,10 @@ if __name__ == '__main__':
     parser.add_argument("--breakpoint", type=str, help="put the last successful ig id here to keep continuing", metavar="IG_NAME")
     parser.add_argument("--load", action="store_true", help="if you want to load 'usernames_list' saved from last time, turn on this option")
     args = parser.parse_args()
+
+    xpath = {
+        'comment_area': '/html/body/div[1]/section/main/div/div[1]/article/div[3]/section[3]/div/form/textarea',
+        'post_button': '/html/body/div[1]/section/main/div/div[1]/article/div[3]/section[3]/div/form/button'
+    }
 
     main(args)
