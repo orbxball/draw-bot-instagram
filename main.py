@@ -59,9 +59,9 @@ def access_account(driver, username, password):
     sleep(3)
 
     print('Logging on Instagram...')
-    driver.find_element_by_xpath('//*[@id="react-root"]/section/main/article/div[2]/div[1]/div/form/div[2]/div/label/input').send_keys(username)
-    driver.find_element_by_xpath('//*[@id="react-root"]/section/main/article/div[2]/div[1]/div/form/div[3]/div/label/input').send_keys(password)
-    driver.find_element_by_xpath('//button[@type="submit"]').click()
+    driver.find_element_by_xpath(xpath['username_input']).send_keys(username)
+    driver.find_element_by_xpath(xpath['password_input']).send_keys(password)
+    driver.find_element_by_xpath(xpath['submit_button']).click()
     sleep(4)
 
     # Sometimes Instagram will ask you if you want to save the login info
@@ -73,7 +73,7 @@ def access_account(driver, username, password):
         sleep(2)
     except:
         # Click on "Not Now"
-        driver.find_element_by_xpath('//*[@id="react-root"]/section/main/div/div/div/div/button').click()
+        driver.find_element_by_xpath(xpath['not_now_button']).click()
         sleep(2)
 
         # Go to account page
@@ -118,16 +118,16 @@ def get_usernames_list(args, config, driver):
 def get_followers(driver):
     print("Accessing follower's list...")
 
-    driver.find_element_by_xpath('//*[@id="react-root"]/section/main/div/header/section/ul/li[2]/a').click()
+    driver.find_element_by_xpath(xpath['followers_link']).click()
     sleep(3)
 
     # get number of followers
-    followers_number = driver.find_element_by_xpath('//*[@id="react-root"]/section/main/div/header/section/ul/li[2]/a/span').get_attribute('textContent')
+    followers_number = driver.find_element_by_xpath(xpath['followers_number_textcontent']).get_attribute('textContent')
 
     if '.' in followers_number:
         followers_number = followers_number.replace('.', '')
 
-    list_to_scroll = driver.find_element_by_xpath('/html/body/div[4]/div/div/div[2]/ul')
+    list_to_scroll = driver.find_element_by_xpath(xpath['followers_list_to_scroll'])
     sleep(2)
 
     # scroll the followers's list to the end
@@ -153,16 +153,16 @@ def get_followers(driver):
 def get_following(driver):
     print("Accessing following's list...")
 
-    driver.find_element_by_xpath('//*[@id="react-root"]/section/main/div/header/section/ul/li[3]/a').click()
+    driver.find_element_by_xpath(xpath['following_link']).click()
     sleep(3)
 
     # get number of following
-    following_number = driver.find_element_by_xpath('//*[@id="react-root"]/section/main/div/header/section/ul/li[3]/a/span').get_attribute('textContent')
+    following_number = driver.find_element_by_xpath(xpath['following_number_textcontent']).get_attribute('textContent')
 
     if '.' in following_number:
         following_number = following_number.replace('.', '')
 
-    list_to_scroll = driver.find_element_by_xpath('/html/body/div[4]/div/div/div[2]/ul')
+    list_to_scroll = driver.find_element_by_xpath(xpath['following_list_to_scroll'])
     sleep(2)
 
     # scroll the following's list to the end
@@ -238,6 +238,16 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     xpath = {
+        'username_input': '//*[@id="react-root"]/section/main/article/div[2]/div[1]/div/form/div[2]/div/label/input',
+        'password_input': '//*[@id="react-root"]/section/main/article/div[2]/div[1]/div/form/div[3]/div/label/input',
+        'submit_button': '//button[@type="submit"]',
+        'not_now_button': '//*[@id="react-root"]/section/main/div/div/div/div/button',
+        'followers_link': '//*[@id="react-root"]/section/main/div/header/section/ul/li[2]/a',
+        'followers_number_textcontent': '//*[@id="react-root"]/section/main/div/header/section/ul/li[2]/a/span',
+        'followers_list_to_scroll': '/html/body/div[4]/div/div/div[2]/ul',
+        'following_link': '//*[@id="react-root"]/section/main/div/header/section/ul/li[3]/a',
+        'following_number_textcontent': '//*[@id="react-root"]/section/main/div/header/section/ul/li[3]/a/span',
+        'following_list_to_scroll': '/html/body/div[4]/div/div/div[2]/ul',
         'comment_area': '/html/body/div[1]/section/main/div/div[1]/article/div[3]/section[3]/div/form/textarea',
         'post_button': '/html/body/div[1]/section/main/div/div[1]/article/div[3]/section[3]/div/form/button'
     }
