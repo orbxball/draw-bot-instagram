@@ -244,10 +244,10 @@ if __name__ == '__main__':
         'not_now_button': '//*[@id="react-root"]/section/main/div/div/div/div/button',
         'followers_link': '//*[@id="react-root"]/section/main/div/header/section/ul/li[2]/a',
         'followers_number_textcontent': '//*[@id="react-root"]/section/main/div/header/section/ul/li[2]/a/span',
-        'followers_list_to_scroll': '/html/body/div[4]/div/div/div[2]/ul',
+        'followers_list_to_scroll': '/html/body/div[5]/div/div/div[2]/ul',
         'following_link': '//*[@id="react-root"]/section/main/div/header/section/ul/li[3]/a',
         'following_number_textcontent': '//*[@id="react-root"]/section/main/div/header/section/ul/li[3]/a/span',
-        'following_list_to_scroll': '/html/body/div[4]/div/div/div[2]/ul',
+        'following_list_to_scroll': '/html/body/div[5]/div/div/div[2]/ul',
         'comment_area': '/html/body/div[1]/section/main/div/div[1]/article/div[3]/section[3]/div/form/textarea',
         'post_button': '/html/body/div[1]/section/main/div/div[1]/article/div[3]/section[3]/div/form/button'
     }
