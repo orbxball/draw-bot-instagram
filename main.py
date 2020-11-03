@@ -238,8 +238,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     xpath = {
-        'username_input': '//*[@id="react-root"]/section/main/article/div[2]/div[1]/div/form/div[2]/div/label/input',
-        'password_input': '//*[@id="react-root"]/section/main/article/div[2]/div[1]/div/form/div[3]/div/label/input',
+        'username_input': '//*[@id="react-root"]/section/main/article/div[2]/div[1]/div/form/div[1]/div/div/label/input',
+        'password_input': '//*[@id="react-root"]/section/main/article/div[2]/div[1]/div/form/div[1]/div[2]/div/label/input',
         'submit_button': '//button[@type="submit"]',
         'not_now_button': '//*[@id="react-root"]/section/main/div/div/div/div/button',
         'followers_link': '//*[@id="react-root"]/section/main/div/header/section/ul/li[2]/a',
